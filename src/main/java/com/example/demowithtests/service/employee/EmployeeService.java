@@ -35,4 +35,13 @@ public interface EmployeeService {
 
     List<Employee> sendMailToCountrySwappers();
 
+    void createEM(Employee employee);
+
+    void detachEM(Integer id);
+
+    Employee findEM(Integer id);
+
+    void removeEM(Integer id);
+
+    void updateEM(Employee employee);
 }

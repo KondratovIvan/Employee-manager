@@ -1,5 +1,6 @@
 package com.example.demowithtests.web.employee;
 
+import com.example.demowithtests.domain.employee.Employee;
 import com.example.demowithtests.dto.employee.EmployeeDto;
 import com.example.demowithtests.dto.employee.EmployeeReadDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -103,4 +104,15 @@ public interface EmployeeController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found."),
             @ApiResponse(responseCode = "409", description = "Email already exists")})
     List<EmployeeReadDto> sendMailToCountrySwappedEmployees();
+
+
+    void createEM(@RequestBody Employee employee);
+
+    Employee findEM(@PathVariable  Integer id);
+
+    void detachEM(@PathVariable Integer id);
+
+    void removeEM(@PathVariable  Integer id);
+
+    void updateEM(@RequestBody Employee employee);
 }

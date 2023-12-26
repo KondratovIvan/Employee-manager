@@ -50,15 +50,15 @@ public class Employee {
 //    public Employee() {
 //    }
 //
-//    public Employee(Integer id, String name, String country, String email, Boolean isDeleted, Set<Address> addresses, Set<Photo> photos) {
-//        this.id = id;
-//        this.name = name;
-//        this.country = country;
-//        this.email = email;
-//        this.isDeleted = isDeleted;
-//        this.addresses = addresses;
-//        this.photos = photos;
-//    }
+    public Employee(Integer id, String name, String country, String email, Boolean isDeleted, Set<Address> addresses, Set<Photo> photos) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.email = email;
+        this.isDeleted = isDeleted;
+        this.addresses = addresses;
+        this.photos = photos;
+    }
 
     public Boolean getIsDeleted() {
         return isDeleted;

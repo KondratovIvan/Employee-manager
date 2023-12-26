@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -191,5 +192,41 @@ public class EmployeeControllerBean  implements EmployeeController{
         }
         log.info("EmployeeController --> sendMailToCountrySwappedEmployees() - end: List<EmployeeReadDto> = {}",employeeReadDtoList);
         return employeeReadDtoList;
+    }
+
+    @Override
+    @PostMapping("/createEM")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createEM(@RequestBody Employee employee) {
+        employeeService.createEM(employee);
+    }
+
+
+    @Override
+    @GetMapping("/findEM/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Employee findEM(@PathVariable  Integer id) {
+        return employeeService.findEM(id);
+    }
+
+    @Override
+    @GetMapping("/detachEM/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void detachEM(@PathVariable Integer id) {
+        employeeService.detachEM(id);
+    }
+
+    @Override
+    @DeleteMapping ("/removeEM/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void removeEM(@PathVariable Integer id) {
+        employeeService.removeEM(id);
+    }
+
+    @Override
+    @PutMapping  ("/updateEM")
+    @ResponseStatus(HttpStatus.OK)
+    public void updateEM(@RequestBody Employee employee) {
+        employeeService.updateEM(employee);
     }
 }

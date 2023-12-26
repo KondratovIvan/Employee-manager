@@ -4,8 +4,11 @@ import com.example.demowithtests.domain.employee.Employee;
 import com.example.demowithtests.repository.EmployeeRepository;
 import com.example.demowithtests.util.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,9 +19,36 @@ import java.util.List;
 public class EmployeeServiceBean implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
     public EmployeeServiceBean(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
+
+    @Transactional
+    public void createEM(Employee employee){
+        entityManager.persist(employee);
+    }
+    @Transactional(propagation = Propagation.NEVER)
+    public Employee findEM(Integer id){
+        return entityManager.find(Employee.class,id);
+    }
+    @Transactional(propagation = Propagation.NEVER)
+    public void detachEM(Integer id){
+        entityManager.detach(entityManager.find(Employee.class,id));
+    }
+
+    @Transactional(propagation = Propagation.NEVER)
+    public void removeEM(Integer id){
+        entityManager.remove(entityManager.find(Employee.class,id));
+    }
+    @Transactional
+    public void updateEM(Employee employee){
+        entityManager.merge(employee);
+    }
+
+
 
    // @SneakyThrows
     @Override
