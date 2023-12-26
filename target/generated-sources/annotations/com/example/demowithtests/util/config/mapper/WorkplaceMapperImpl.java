@@ -2,17 +2,18 @@ package com.example.demowithtests.util.config.mapper;
 
 import com.example.demowithtests.domain.employee.Employee;
 import com.example.demowithtests.domain.office.Workplace;
+import com.example.demowithtests.domain.office.Workplace.WorkplaceBuilder;
 import com.example.demowithtests.dto.workplace.WorkplaceRequestDto;
 import com.example.demowithtests.dto.workplace.WorkplaceResponseDto;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-12T03:06:29+0300",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
+    date = "2023-04-17T14:29:13+0300",
+    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
 )
 @Component
 public class WorkplaceMapperImpl implements WorkplaceMapper {
@@ -23,13 +24,13 @@ public class WorkplaceMapperImpl implements WorkplaceMapper {
             return null;
         }
 
-        Workplace.WorkplaceBuilder workplace = Workplace.builder();
+        WorkplaceBuilder workplace = Workplace.builder();
 
         workplace.name( workplaceRequestDto.name );
         workplace.address( workplaceRequestDto.address );
         Set<Employee> set = workplaceRequestDto.employees;
         if ( set != null ) {
-            workplace.employees( new LinkedHashSet<Employee>( set ) );
+            workplace.employees( new HashSet<Employee>( set ) );
         }
 
         return workplace.build();
@@ -47,7 +48,7 @@ public class WorkplaceMapperImpl implements WorkplaceMapper {
         workplaceResponseDto.address = workplace.getAddress();
         Set<Employee> set = workplace.getEmployees();
         if ( set != null ) {
-            workplaceResponseDto.employees = new LinkedHashSet<Employee>( set );
+            workplaceResponseDto.employees = new HashSet<Employee>( set );
         }
 
         return workplaceResponseDto;
