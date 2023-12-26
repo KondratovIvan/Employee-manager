@@ -1,36 +1,39 @@
 package com.example.demowithtests.service;
 
 import com.example.demowithtests.domain.Employee;
+import com.example.demowithtests.util.UserIsNotExistException;
 
-import java.io.IOException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 public interface Service {
 
-    Employee create(Employee employee) ;
+    Employee create(Employee employee);
 
     List<Employee> getAll();
 
-//    Employee getById(Integer id);
-
     Employee getById(String id);
 
-    Employee updateById(Integer id, Employee plane);
+    Employee updateById(Integer id, Employee plane) throws UserIsNotExistException;
 
     void removeById(Integer id);
 
     void removeAll();
 
-   List<Employee> processor();
-
     List<Employee> sendEmailByCountry(String country, String text);
 
     List<Employee> sendEmailByCity(String city, String text);
 
-    List<Employee> sendEmailByCountryAndCity(String country, String city, String text);
+    Employee createrEmployee(String name, String country, String email);
 
-    void fillData();
+    void fillingDataBase(String quantity);
 
-    void updateDateById(Integer startId, Integer endId);
+    void updaterByCountryFully(String countries);
+    void updaterByCountrySmart(String countries);
+    String randomCountry(String countriesString);
+    List<Employee> processor();
+    List<Employee> sendMailToEverybody();
+
 
 }

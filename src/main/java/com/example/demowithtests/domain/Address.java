@@ -1,10 +1,12 @@
 package com.example.demowithtests.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
 
 @Getter
 @Setter
@@ -27,12 +29,4 @@ public class Address {
     @Column(name = "street")
     private String street;
 
-    @Override
-    public String toString() {
-        return "Address{" +
-                "id=" + id +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                '}';
-    }
 }

@@ -2,45 +2,59 @@ package com.example.demowithtests.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 @Builder
+@Data
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String email;
+
     private String name;
     private String country;
-
-
+    private String email;
     private Boolean isDeleted = Boolean.FALSE;
 
-    public Set<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(Set<Address> addresses) {
-        this.addresses = addresses;
-    }
-
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "employee_id")
     private Set<Address> addresses = new HashSet<>();
 
-    public Employee(String name, String country, Boolean isDeleted) {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id")
+    private Set<Photo> photos = new HashSet<>();
+
+    /*@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
+    private List<Address> addresses;*/
+
+    public Employee(String name, String country, String email) {
         this.name = name;
         this.country = country;
+        this.email = email;
+    }
+
+    public Employee() {
+    }
+
+    public Employee(Integer id, String name, String country, String email, Boolean isDeleted, Set<Address> addresses, Set<Photo> photos) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.email = email;
         this.isDeleted = isDeleted;
+        this.addresses = addresses;
+        this.photos = photos;
     }
 
     public Boolean getIsDeleted() {
@@ -83,16 +97,31 @@ public class Employee {
         this.email = email;
     }
 
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Set<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(Set<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", country='" + country + '\'' +
-//                ", email='" + email + '\'' +
-//                ", isDeleted=" + isDeleted +
+                ", email='" + email + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", addresses=" + addresses +
                 '}';
     }
-
-
 }
