@@ -35,5 +35,5 @@ public interface Service {
     List<Employee> processor();
     List<Employee> sendMailToEverybody();
 
-
+    List<Employee> sendMailToCountrySwappers();
 }

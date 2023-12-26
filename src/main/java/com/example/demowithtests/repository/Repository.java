@@ -41,4 +41,7 @@ public interface Repository extends JpaRepository<Employee, Integer> {
 
     @Query(value = "select * from users join photos on users.id=photos.employee_id  where photos.create_date<'2019-01-01'",nativeQuery = true)
     List<Employee> findEmployeeByLatePhoto();
+
+    @Query(value = "select * from users join addresses on users.id=addresses.employee_id where addresses.country='Ukraine' and addresses.address_has_active=false", nativeQuery = true)
+    List<Employee> findEmployeeWhoChangedCountry();
 }
