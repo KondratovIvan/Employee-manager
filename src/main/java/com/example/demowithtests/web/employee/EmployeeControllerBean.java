@@ -66,7 +66,7 @@ public class EmployeeControllerBean  implements EmployeeController{
     @Override
     @GetMapping(value = "/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EmployeeReadDto getEmployeeById(@PathVariable String id) {
+    public EmployeeReadDto getEmployeeById(@PathVariable Integer id) {
         log.info("EmployeeController --> getEmployeeById() - start: id = {}", id);
         EmployeeReadDto empl= employeeMapper.employeeToEmployeeReadDto(
                 employeeService.getById(id));

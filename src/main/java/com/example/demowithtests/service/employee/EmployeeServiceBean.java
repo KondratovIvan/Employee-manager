@@ -56,7 +56,7 @@ public class EmployeeServiceBean implements EmployeeService {
         log.debug("EmployeeService --> create() - start: employee = {}", employee);
         if (employeeRepository.findEmployeeByEmail(employee.getEmail()) == null) {
             if (employee.getEmail() == null) {
-                throw new EmailAbsentException();
+//                throw new EmailAbsentException();
             }
             return employeeRepository.save(employee);
         }
@@ -81,10 +81,10 @@ public class EmployeeServiceBean implements EmployeeService {
     }
 
     @Override
-    public Employee getById(String id) {
+    public Employee getById(Integer id) {
         try {
             log.debug("EmployeeService --> getById() - start: id = {}", id);
-            Integer employeeId = Integer.parseInt(id);
+            Integer employeeId = id;
             Employee employee = employeeRepository.findById(employeeId)
                     .orElseThrow(IdIsNotExistException::new);
             if (employee.getIsDeleted()) {

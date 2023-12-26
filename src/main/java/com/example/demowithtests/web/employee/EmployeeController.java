@@ -30,7 +30,7 @@ public interface EmployeeController {
             @ApiResponse(responseCode = "200", description = "Employee successfully got"),
             @ApiResponse(responseCode = "400", description = "Invalid input"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Specified employee request not found.")})
-    EmployeeReadDto getEmployeeById(@PathVariable String id);
+    EmployeeReadDto getEmployeeById(@PathVariable Integer id);
 
     @Operation(summary = "This is endpoint to update employee by id.", description = "Create request to update employee.", tags = {"Employee"})
     @ApiResponses(value = {

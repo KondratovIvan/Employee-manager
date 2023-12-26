@@ -2,25 +2,22 @@ package com.example.demowithtests.util.config.mapper;
 
 import com.example.demowithtests.domain.employee.Address;
 import com.example.demowithtests.domain.employee.Employee;
-import com.example.demowithtests.domain.employee.Employee.EmployeeBuilder;
 import com.example.demowithtests.domain.employee.Photo;
-import com.example.demowithtests.domain.employee.Photo.PhotoBuilder;
 import com.example.demowithtests.domain.passport.Passport;
-import com.example.demowithtests.domain.passport.Passport.PassportBuilder;
 import com.example.demowithtests.dto.employee.EmployeeDto;
 import com.example.demowithtests.dto.employee.EmployeeReadDto;
 import com.example.demowithtests.dto.employee.PhotoDto;
 import com.example.demowithtests.dto.passport.PassportRequestDto;
 import com.example.demowithtests.dto.passport.PassportResponseDto;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-23T21:42:54+0300",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
+    date = "2023-04-30T21:14:57+0300",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
 )
 @Component
 public class EmployeeMapperImpl implements EmployeeMapper {
@@ -31,14 +28,15 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        EmployeeBuilder employee = Employee.builder();
+        Employee.EmployeeBuilder employee = Employee.builder();
 
+        employee.id( employeeDto.id );
         employee.name( employeeDto.name );
         employee.country( employeeDto.country );
         employee.email( employeeDto.email );
         Set<Address> set = employeeDto.addresses;
         if ( set != null ) {
-            employee.addresses( new HashSet<Address>( set ) );
+            employee.addresses( new LinkedHashSet<Address>( set ) );
         }
         employee.photos( photoDtoSetToPhotoSet( employeeDto.photos ) );
         employee.passport( passportRequestDtoToPassport( employeeDto.passport ) );
@@ -54,13 +52,14 @@ public class EmployeeMapperImpl implements EmployeeMapper {
 
         EmployeeDto employeeDto = new EmployeeDto();
 
+        employeeDto.id = employee.getId();
         employeeDto.name = employee.getName();
         employeeDto.country = employee.getCountry();
         employeeDto.email = employee.getEmail();
         employeeDto.photos = photoSetToPhotoDtoSet( employee.getPhotos() );
         Set<Address> set1 = employee.getAddresses();
         if ( set1 != null ) {
-            employeeDto.addresses = new HashSet<Address>( set1 );
+            employeeDto.addresses = new LinkedHashSet<Address>( set1 );
         }
         employeeDto.passport = passportToPassportRequestDto( employee.getPassport() );
 
@@ -80,7 +79,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
         employeeReadDto.photos = photoSetToPhotoDtoSet( employee.getPhotos() );
         Set<Address> set1 = employee.getAddresses();
         if ( set1 != null ) {
-            employeeReadDto.addresses = new HashSet<Address>( set1 );
+            employeeReadDto.addresses = new LinkedHashSet<Address>( set1 );
         }
         employeeReadDto.passport = passportToPassportResponseDto( employee.getPassport() );
 
@@ -93,13 +92,13 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        EmployeeBuilder employee = Employee.builder();
+        Employee.EmployeeBuilder employee = Employee.builder();
 
         employee.name( employeeReadDto.name );
         employee.email( employeeReadDto.email );
         Set<Address> set = employeeReadDto.addresses;
         if ( set != null ) {
-            employee.addresses( new HashSet<Address>( set ) );
+            employee.addresses( new LinkedHashSet<Address>( set ) );
         }
         employee.photos( photoDtoSetToPhotoSet( employeeReadDto.photos ) );
         employee.passport( passportResponseDtoToPassport( employeeReadDto.passport ) );
@@ -112,7 +111,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        PhotoBuilder photo = Photo.builder();
+        Photo.PhotoBuilder photo = Photo.builder();
 
         photo.id( photoDto.id );
         photo.linkPhoto( photoDto.linkPhoto );
@@ -129,7 +128,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        Set<Photo> set1 = new HashSet<Photo>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<Photo> set1 = new LinkedHashSet<Photo>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( PhotoDto photoDto : set ) {
             set1.add( photoDtoToPhoto( photoDto ) );
         }
@@ -142,7 +141,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        PassportBuilder passport = Passport.builder();
+        Passport.PassportBuilder passport = Passport.builder();
 
         passport.firstName( passportRequestDto.firstName );
         passport.secondName( passportRequestDto.secondName );
@@ -173,7 +172,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        Set<PhotoDto> set1 = new HashSet<PhotoDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
+        Set<PhotoDto> set1 = new LinkedHashSet<PhotoDto>( Math.max( (int) ( set.size() / .75f ) + 1, 16 ) );
         for ( Photo photo : set ) {
             set1.add( photoToPhotoDto( photo ) );
         }
@@ -215,7 +214,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
             return null;
         }
 
-        PassportBuilder passport = Passport.builder();
+        Passport.PassportBuilder passport = Passport.builder();
 
         passport.firstName( passportResponseDto.getFirstName() );
         passport.secondName( passportResponseDto.getSecondName() );

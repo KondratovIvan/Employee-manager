@@ -1,3 +1,4 @@
+com\example\demowithtests\domain\employee\Address$AddressBuilder.class
 com\example\demowithtests\web\employee\EmployeeController.class
 com\example\demowithtests\util\UserAlreadyDeletedException.class
 com\example\demowithtests\domain\employee\Address.class

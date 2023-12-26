@@ -10,6 +10,7 @@ import java.util.Set;
 
 
 public class EmployeeDto {
+    public Integer id;
     @Schema(description = "Name of an employee.", example = "Billy", required = true)
     public String name;
     @Schema(description = "Country of an employee.", example = "Ukraine", required = true)

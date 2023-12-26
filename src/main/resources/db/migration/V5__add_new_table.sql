@@ -1,5 +1,5 @@
-create table public.new_table
-(
-    id serial
-        primary key
-);
+-- create table public.new_table
+-- (
+--     id serial
+--         primary key
+-- );

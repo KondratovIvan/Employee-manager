@@ -4,6 +4,9 @@ import com.example.demowithtests.domain.employee.Employee;
 import com.example.demowithtests.repository.EmployeeRepository;
 import com.example.demowithtests.service.employee.EmployeeServiceBean;
 import com.example.demowithtests.util.CopyDataException;
+import com.example.demowithtests.util.IdIsNotExistException;
+import com.example.demowithtests.util.ListHasNoAnyElementsException;
+import com.example.demowithtests.util.ListWasDeletedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
@@ -12,9 +15,12 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
@@ -49,19 +55,30 @@ public class EmployeeServiceTests {
 
         when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
 
-        Employee expected = service.getById(employee.getId().toString());
+        Employee expected = service.getById(employee.getId());
 
         assertThat(expected).isSameAs(employee);
         verify(employeeRepository).findById(employee.getId());
     }
 
-    @Test(expected = EntityNotFoundException.class)
+    @Test(expected = IdIsNotExistException.class)
     public void should_throw_exception_when_employee_doesnt_exist() {
         Employee employee = new Employee();
         employee.setId(89);
         employee.setName("Mark");
 
         given(employeeRepository.findById(anyInt())).willReturn(Optional.empty());
-        service.getById(employee.getId().toString());
+        service.getById(employee.getId());
+    }
+
+    @Test
+    public void when_findAll_return_employees() {
+        List<Employee> employees = Arrays.asList(new Employee("TestEmpl","Ukraine","testmail@gmail.com"), new Employee("TestEmpl","Ukraine","testmail@gmail.com"));
+
+        given(employeeRepository.findAll()).willReturn(employees);
+
+        List<Employee> actualEmployees = employeeRepository.findAll();
+
+        assertEquals(employees, actualEmployees);
     }
 }

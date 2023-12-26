@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     List<Employee> getAll();
 
-    Employee getById(String id);
+    Employee getById(Integer id);
 
     Employee updateById(Integer id, Employee plane) throws UserIsNotExistException;
 

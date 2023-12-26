@@ -1,7 +1,6 @@
 package com.example.demowithtests.util.config.mapper;
 
 import com.example.demowithtests.domain.passport.Passport;
-import com.example.demowithtests.domain.passport.Passport.PassportBuilder;
 import com.example.demowithtests.dto.passport.PassportRequestDto;
 import com.example.demowithtests.dto.passport.PassportResponseDto;
 import javax.annotation.processing.Generated;
@@ -9,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-23T21:42:54+0300",
-    comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
+    date = "2023-04-30T21:14:57+0300",
+    comments = "version: 1.5.1.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
 )
 @Component
 public class PassportMapperImpl implements PassportMapper {
@@ -21,7 +20,7 @@ public class PassportMapperImpl implements PassportMapper {
             return null;
         }
 
-        PassportBuilder passport = Passport.builder();
+        Passport.PassportBuilder passport = Passport.builder();
 
         passport.firstName( requestDto.firstName );
         passport.secondName( requestDto.secondName );
@@ -67,7 +66,7 @@ public class PassportMapperImpl implements PassportMapper {
             return null;
         }
 
-        PassportBuilder passport = Passport.builder();
+        Passport.PassportBuilder passport = Passport.builder();
 
         passport.firstName( responseDto.getFirstName() );
         passport.secondName( responseDto.getSecondName() );
