@@ -34,4 +34,5 @@ public interface EmployeeService {
     List<Employee> sendMailToEverybody();
 
     List<Employee> sendMailToCountrySwappers();
+
 }

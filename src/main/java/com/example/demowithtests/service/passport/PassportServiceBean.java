@@ -2,12 +2,11 @@ package com.example.demowithtests.service.passport;
 
 import com.example.demowithtests.domain.passport.Passport;
 import com.example.demowithtests.repository.PassportRepository;
-import com.example.demowithtests.util.IncorrectPassportDataEnterException;
+import com.example.demowithtests.util.IncorrectDataEnterException;
 import com.example.demowithtests.util.ListHasNoAnyElementsException;
 import com.example.demowithtests.util.ResourceNotFoundException;
 import com.example.demowithtests.util.UnrealAgeException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class PassportServiceBean implements PassportService {
     public Passport create(Passport passport) {
         log.debug("PassportService --> create() - start: passport = {}",passport);
         if(passport.getFirstName()==null||passport.getSecondName()==null||passport.getBirthDate()==null){
-            throw new IncorrectPassportDataEnterException();
+            throw new IncorrectDataEnterException();
         }
         if(passport.getBirthDate().isAfter(LocalDate.of(1859, 1, 1))&&passport.getBirthDate().isBefore(LocalDate.of(2009, 04, 03))){
             Passport createdPassport=passportRepository.save(passport);

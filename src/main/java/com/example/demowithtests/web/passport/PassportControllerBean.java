@@ -4,7 +4,7 @@ import com.example.demowithtests.domain.passport.Passport;
 import com.example.demowithtests.dto.passport.PassportRequestDto;
 import com.example.demowithtests.dto.passport.PassportResponseDto;
 import com.example.demowithtests.service.passport.PassportService;
-import com.example.demowithtests.util.config.PassportMapper;
+import com.example.demowithtests.util.config.mapper.PassportMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

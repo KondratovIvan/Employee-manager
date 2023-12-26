@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @ToString
 public class PassportRequestDto {
+
     @Schema(description = "FirstName in a passport.", example = "Billy", required = true)
     public String firstName;
     @Schema(description = "SecondName in a passport.", example = "Herrington", required = true)

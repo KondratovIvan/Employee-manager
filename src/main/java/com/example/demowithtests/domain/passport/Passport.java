@@ -27,7 +27,7 @@ public class Passport {
     private String secondName;
     private LocalDate birthDate;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name = "passport_id")
     private Set<Registration> registrations = new HashSet<>();
 

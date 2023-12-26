@@ -1,5 +1,6 @@
 package com.example.demowithtests.dto.passport;
 
+import com.example.demowithtests.domain.employee.Employee;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import java.util.UUID;
 @Setter
 public class PassportResponseDto {
     @Schema(description = "SerialNumber in a passport.", example = "9e6a6c17-db8e-4a40-a809-354f34643f7a", required = true)
-    public final UUID serialNumber = UUID.randomUUID();
+    public  UUID serialNumber;
     @Schema(description = "FirstName in a passport.", example = "Billy", required = true)
     public String firstName;
     @Schema(description = "SecondName in a passport.", example = "Herrington", required = true)

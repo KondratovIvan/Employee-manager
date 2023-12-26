@@ -1,4 +1,4 @@
-package com.example.demowithtests.util.config;
+package com.example.demowithtests.util.config.mapper;
 
 import com.example.demowithtests.domain.employee.Address;
 import com.example.demowithtests.domain.employee.Employee;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-04-03T23:40:52+0300",
+    date = "2023-04-12T03:06:29+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.3 (JetBrains s.r.o.)"
 )
 @Component
@@ -199,6 +199,7 @@ public class EmployeeMapperImpl implements EmployeeMapper {
 
         PassportResponseDto passportResponseDto = new PassportResponseDto();
 
+        passportResponseDto.setSerialNumber( passport.getSerialNumber() );
         passportResponseDto.setFirstName( passport.getFirstName() );
         passportResponseDto.setSecondName( passport.getSecondName() );
         passportResponseDto.setBirthDate( passport.getBirthDate() );

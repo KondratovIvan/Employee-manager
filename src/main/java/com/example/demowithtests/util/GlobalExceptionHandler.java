@@ -1,6 +1,5 @@
 package com.example.demowithtests.util;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -82,9 +81,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new MyGlobalExceptionHandler("Human you entered is too old or too young"), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(IncorrectPassportDataEnterException.class)
+    @ExceptionHandler(IncorrectDataEnterException.class)
     public ResponseEntity<?> incorrectPassportDataEnterException(){
         return new ResponseEntity<>(new MyGlobalExceptionHandler("You entered not full data"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectNameEnterException.class)
+    public ResponseEntity<?> incorrectNameEnterException(){
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("Name must contain only English letters"), HttpStatus.BAD_REQUEST);
     }
     @Data
             // @AllArgsConstructor

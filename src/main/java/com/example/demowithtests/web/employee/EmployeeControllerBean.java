@@ -4,7 +4,7 @@ import com.example.demowithtests.domain.employee.Employee;
 import com.example.demowithtests.dto.employee.EmployeeDto;
 import com.example.demowithtests.dto.employee.EmployeeReadDto;
 import com.example.demowithtests.service.employee.EmployeeService;
-import com.example.demowithtests.util.config.EmployeeMapper;
+import com.example.demowithtests.util.config.mapper.EmployeeMapper;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
