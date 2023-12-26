@@ -2,12 +2,18 @@ package com.example.demowithtests.service;
 
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.repository.Repository;
-import com.example.demowithtests.util.*;
+import com.example.demowithtests.util.AccessException;
+import com.example.demowithtests.util.ResourceNotFoundException;
+import com.example.demowithtests.util.ResourceWasDeletedException;
+import com.example.demowithtests.util.WrongArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Slf4j
@@ -18,95 +24,127 @@ public class ServiceBean implements Service {
 
     @Override
     public Employee create(Employee employee) {
-        if(employee.getName()==null||employee.getEmail()==null||employee.getCountry()==null){
-            throw new EmptyUserParameterException();
-        }
-        else{
-            if(repository.findEmployeeByEmail(employee.getEmail())==null){
-                return repository.save(employee);
-            }
-            else {
-                throw new ResourceAlreadyExistsException();
-            }
-        }
+        return repository.save(employee);
     }
 
     @Override
     public List<Employee> getAll() {
-        List<Employee> allEmployees=repository.findAll();
-        if(allEmployees.isEmpty()){
-            throw new NothingToGetException();
-        }
-        else {
-            if(allEmployees.size()>100){
-                throw new TooMuchReturnedUsersException();
-            }
-            else {
-                return repository.findAll();
-            }
+        try {
+            return repository.findAll();
+        } catch (NullPointerException e) {
+            throw new ResourceNotFoundException();
+        } catch (DataAccessException e) {
+            throw new AccessException();
         }
     }
 
     @Override
     public Employee getById(Integer id) {
-        Employee employee = repository.findById(id)
-               // .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
+        if (id == null) {
+            throw new WrongArgumentException();
+        }
+        var employee = repository.findById(id)
+                // .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
                 .orElseThrow(ResourceNotFoundException::new);
-         /*if (employee.getIsDeleted()) {
+        if (employee.getIsDeleted()) {
             throw new EntityNotFoundException("Employee was deleted with id = " + id);
-        }*/
+        }
         return employee;
     }
 
     @Override
-    public Optional<Employee> updateById(Integer id, Employee employee) {
-        if(repository.findEmployeeById(id)==null){
-            throw new IdNotExistsException();
+    public Employee updateById(Integer id, Employee employee) {
+        try {
+            return repository.findById(id)
+                    .map(entity -> {
+                        entity.setName(employee.getName());
+                        entity.setEmail(employee.getEmail());
+                        entity.setCountry(employee.getCountry());
+                        return repository.save(entity);
+                    })
+                    .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
+        } catch (IllegalArgumentException e) {
+            throw new WrongArgumentException();
+        } catch (DataAccessException e) {
+            throw new AccessException();
         }
-        else {
-            if(repository.findEmployeeById(id).getName().equals(employee.getName())&&repository.findEmployeeById(id).getEmail().equals(employee.getEmail())&&repository.findEmployeeById(id).getCountry().equals(employee.getCountry())){
-                throw new SameUpdateException();
-            }
-            else {
-                return repository.findById(id)
-                        .map(entity -> {
-                            entity.setName(employee.getName());
-                            entity.setEmail(employee.getEmail());
-                            entity.setCountry(employee.getCountry());
-                            return repository.save(entity);
-                        });
-            }
-
-        }
-
     }
 
     @Override
     public void removeById(Integer id) {
-        //repository.deleteById(id);
-        Employee employee = repository.findById(id)
-               // .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
-                .orElseThrow(ResourceWasDeletedException::new);
-        //employee.setIsDeleted(true);
-        repository.delete(employee);
-        //repository.save(employee);
+        try {
+            var employee = repository.findById(id)
+                    // .orElseThrow(() -> new EntityNotFoundException("Employee not found with id = " + id));
+                    .orElseThrow(ResourceWasDeletedException::new);
+            employee.setIsDeleted(true);
+            repository.save(employee);
+        } catch (DataAccessException e) {
+            throw new AccessException();
+        }
     }
 
     @Override
     public void removeAll() {
-        List<Employee> allEmployees=repository.findAll();
-        if(allEmployees.isEmpty()){
-            throw new NothingToRemoveException();
+        try {
+            repository.deleteAll();
+        } catch (DataAccessException e) {
+            throw new AccessException();
+        }
+
+
+    }
+
+    @Override
+    public List<Employee> processor() {
+        log.info("replace null  - start");
+        List<Employee> replaceNull = repository.findEmployeeByIsDeletedNull();
+        log.info("replace null after replace: " + replaceNull);
+        for (Employee emp : replaceNull) {
+            emp.setIsDeleted(Boolean.FALSE);
+        }
+        log.info("replaceNull = {} ", replaceNull);
+        log.info("replace null  - end:");
+        return repository.saveAll(replaceNull);
+    }
+
+    @Override
+    public List<Employee> sendEmailByCountry(String country, String text) {
+        List<Employee> employees = repository.findEmployeeByCountry(country);
+        mailSender(extracted(employees), text);
+        return employees;
+    }
+
+    @Override
+    public List<Employee> sendEmailByCity(String city, String text) {
+        List<Employee> employees = repository.findEmployeeByAddresses(city);
+        mailSender(extracted(employees), text);
+        return employees;
+    }
+
+    @Override
+    public List<Employee> sendEmailByStreet(String street, String text) {
+        List<Employee> employees = repository.findEmployeeByStreet(street);
+        mailSender(extracted(employees), text);
+        return employees;
+    }
+
+
+    private static List<String> extracted(List<Employee> employees) {
+        List<String> emails = new ArrayList<>();
+        //Arrays.asList();
+        for (Employee emp : employees) {
+            emails.add(emp.getEmail());
+        }
+        return emails;
+    }
+
+
+    public void mailSender(List<String> emails, String text) {
+        if(emails.isEmpty()){
+            log.info("No users who live in this street");
         }
         else {
-            repository.deleteAll();
-            List<Employee> allEmployeesAfterDel=repository.findAll();
-            if(!allEmployeesAfterDel.isEmpty()){
-                throw new NotAllWasDeletedException();
-            }
-
+            log.info("Emails were successfully sent");
         }
-
-
     }
 }

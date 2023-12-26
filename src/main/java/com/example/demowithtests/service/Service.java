@@ -3,7 +3,6 @@ package com.example.demowithtests.service;
 import com.example.demowithtests.domain.Employee;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface Service {
 
@@ -13,11 +12,17 @@ public interface Service {
 
     Employee getById(Integer id);
 
-    Optional<Employee> updateById(Integer id, Employee plane);
+    Employee updateById(Integer id, Employee plane);
 
     void removeById(Integer id);
 
     void removeAll();
 
+    List<Employee> processor();
 
+    List<Employee> sendEmailByCountry(String country, String text);
+
+    List<Employee> sendEmailByCity(String city, String text);
+
+    List<Employee> sendEmailByStreet(String street, String text);
 }

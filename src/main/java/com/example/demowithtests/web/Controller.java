@@ -2,13 +2,15 @@ package com.example.demowithtests.web;
 
 import com.example.demowithtests.domain.Employee;
 import com.example.demowithtests.service.Service;
+import com.example.demowithtests.util.WrongTypeOfDataException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
+
 
 @RestController
 @AllArgsConstructor
@@ -34,25 +36,27 @@ public class Controller {
     //Получения юзера по id
     @GetMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Employee getEmployeeById(@PathVariable Integer id) {
+    public Employee getEmployeeById(@PathVariable String id) throws WrongTypeOfDataException {
 
-        Employee employee = service.getById(id);
+        Integer parsedId = Integer.parseInt(id);
+        Employee employee = service.getById(parsedId);
         return employee;
     }
 
     //Обновление юзера
     @PutMapping("/users/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Optional<Employee> refreshEmployee(@PathVariable("id") Integer id, @RequestBody Employee employee) {
-
-        return service.updateById(id, employee);
+    public Employee refreshEmployee(@PathVariable("id") String id, @RequestBody Employee employee) throws WrongTypeOfDataException{
+        Integer parseId=Integer.parseInt(id);
+        return service.updateById(parseId, employee);
     }
 
     //Удаление по id
     @PatchMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void removeEmployeeById(@PathVariable Integer id) {
-        service.removeById(id);
+    public void removeEmployeeById(@PathVariable String id) {
+        Integer parseId=Integer.parseInt(id);
+        service.removeById(parseId);
     }
 
     //Удаление всех юзеров
@@ -61,4 +65,31 @@ public class Controller {
     public void removeAllUsers() {
         service.removeAll();
     }
+
+
+    //@PatchMapping("/replaceNull")
+    @GetMapping("/replaceNull")
+    @ResponseStatus(HttpStatus.OK)
+    public void replaceNull(){
+        service.processor();
+    }
+
+    @PostMapping("/sendEmailByCountry")
+    @ResponseStatus(HttpStatus.OK)
+    public void sendEmailByCountry(@RequestParam String country, @RequestParam String text){
+        service.sendEmailByCountry(country, text);
+    }
+
+    @PostMapping("/sendEmailByCity")
+    @ResponseStatus(HttpStatus.OK)
+    public void sendEmailByCity(@RequestParam String city, @RequestParam String text){
+        service.sendEmailByCountry(city, text);
+    }
+
+    @PostMapping("/sendEmailByStreet")
+    @ResponseStatus(HttpStatus.OK)
+    public void sendEmailByStreet(@RequestParam String street, @RequestParam String text){
+        service.sendEmailByStreet(street, text);
+    }
+
 }
