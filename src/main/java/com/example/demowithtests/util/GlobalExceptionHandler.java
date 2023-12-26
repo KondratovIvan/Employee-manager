@@ -77,7 +77,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new MyGlobalExceptionHandler("This user was already deleted"), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UnrealAgeException.class)
+    public ResponseEntity<?> unrealAgeException(){
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("Human you entered is too old or too young"), HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(IncorrectPassportDataEnterException.class)
+    public ResponseEntity<?> incorrectPassportDataEnterException(){
+        return new ResponseEntity<>(new MyGlobalExceptionHandler("You entered not full data"), HttpStatus.BAD_REQUEST);
+    }
     @Data
             // @AllArgsConstructor
     private class MyGlobalExceptionHandler {
