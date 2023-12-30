@@ -1,7 +1,8 @@
 # employee-manager
 
-##To run this application you must
-###**1. Docker**
+To run this application you must
+
+**1. Docker**
 * Download Docker [Here](https://docs.docker.com/get-docker/). Hint: Enable Hyper-V feature on windows and restart;
 * Then open powershell and check:
 ```bash
@@ -15,7 +16,8 @@ or docker compose version
 ```bash
 docker-compose -v
 ```
-###**2. Spring boot app**
+
+**2. Spring boot app**
 * Clone the repository:
 ```bash
 git clone https://github.com/OKaluzny/spring-boot-docker-postgres.git
@@ -30,7 +32,9 @@ This command will build the docker containers and start them.
 ```bash
 docker-compose up
 ```
-###**Note**
+
+**Note**
+
 All commands should be run from project root (where docker-compose.yml locates)
 
 * If you have to want to see running containers. Checklist docker containers
@@ -41,9 +45,13 @@ or
 ```bash
 docker-compose ps
 ```
-###**3. Postman**
+
+**3. Postman**
+
 Download and install the Postman request client to send HTTP requests
-###**4. Stop app**
+
+**4. Stop app**
+
 *  Stop containers:
 ```bash
 docker-compose down
