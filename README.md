@@ -20,7 +20,7 @@ docker-compose -v
 **2. Spring boot app**
 * Clone the repository:
 ```bash
-git clone https://github.com/OKaluzny/spring-boot-docker-postgres.git
+git clone https://github.com/KondratovIvan/employee-manager.git
 ```
 * Build the maven project:
 ```bash
